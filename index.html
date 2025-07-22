@@ -8,13 +8,20 @@
     body {
       margin: 0;
       padding: 0;
-      background: #111;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
       font-family: Arial, sans-serif;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
     .container {
       width: 100%;
@@ -67,6 +74,18 @@
         Ваш браузер не поддерживает видео.
       </video>
     </div>
+    <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
   </div>
   <!-- Удаляю подключение Plyr -->
   <script>
