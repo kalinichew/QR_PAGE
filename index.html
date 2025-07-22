@@ -27,7 +27,12 @@
       padding-bottom: 56.25%; /* 16:9 */
       padding-top: 25px;
       height: 0;
+      /* Возвращаю display:flex и убираю max-width, margin */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+    .video-responsive video,
     .video-responsive iframe {
       position: absolute;
       top: 0;
@@ -35,6 +40,7 @@
       width: 100%;
       height: 100%;
       border: none;
+      /* убираю display:block */
     }
     .img-row {
       display: flex;
@@ -42,13 +48,16 @@
       align-items: center;
       gap: 24px;
       margin-bottom: 24px;
+      /* убираю flex-wrap и увеличенный margin */
     }
     @media (max-width: 600px) {
       .container {
         padding: 4px;
       }
+      /* убираю изменения для .img-row img и .video-responsive */
     }
   </style>
+  <!-- Удаляю подключение Plyr -->
 </head>
 <body>
   <div class="container">
@@ -59,8 +68,10 @@
       <img src="cat-cute-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
     </div>
     <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              allowfullscreen></iframe>
+      <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+        <source src="video.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+      </video>
     </div>
     <div class="img-row">
         <img src="cat-dance-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
@@ -69,5 +80,9 @@
         <img src="cat-dance-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
       </div>
   </div>
+  <!-- Удаляю подключение Plyr -->
+  <script>
+    // Удаляю Plyr скрипт
+  </script>
 </body>
 </html> 
