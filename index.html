@@ -29,10 +29,11 @@
       100% { background: #ff3b3b; }
     }
     .container {
-      width: 100%;
-      max-width: 800px;
-      padding: 16px;
-      box-sizing: border-box;
+      width: 90%;
+      max-width: 1600px;
+      padding: 10px;
+      margin-left: 13px
+      /* box-sizing: border-box; */
     }
     .video-responsive {
       position: relative;
@@ -41,11 +42,11 @@
       margin: 0;
     }
     .video-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      width: 100%;
-      margin: 0 auto 32px auto;
+      /* display: grid; */
+      /* grid-template-columns: 1fr; */
+      /* gap: 32px; */
+      /* width: 100%; */
+      /* margin: 0 auto 32px auto; */
     }
     .video-responsive video {
       position: absolute;
@@ -112,6 +113,7 @@
   </div>
   <div id="main-content" style="display:none; width: 100%;">
     <div style="width:100%; max-width:900px; margin: 32px auto 24px auto; text-align:center;">
+      <h1 style = "text-shadow: 2px 2px 8px #000;">Ты стал посетителем № <span id="visitor-number"></span></h1>
       <h1 style="font-size:2.5em; margin-bottom:0.2em; color:#fff; text-shadow: 2px 2px 8px #000; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
         <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
         <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
@@ -136,6 +138,9 @@
     </h1>
   </div>
   <script>
+  const number = Math.floor(Math.random() * 4000 + 1000);
+  document.getElementById('visitor-number').textContent = number;
+
     document.getElementById('start-btn').addEventListener('click', function() {
       document.getElementById('start-block').style.display = 'none';
       document.getElementById('main-content').style.display = '';
