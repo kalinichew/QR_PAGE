@@ -34,10 +34,18 @@
       padding-bottom: 56.25%; /* 16:9 */
       padding-top: 25px;
       height: 0;
-      /* Возвращаю display:flex и убираю max-width, margin */
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto 32px auto;
     }
     .video-responsive video,
     .video-responsive iframe {
@@ -68,24 +76,44 @@
 </head>
 <body>
   <div class="container">
-    <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-      <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
-        <source src="video.mp4" type="video/mp4">
-        Ваш браузер не поддерживает видео.
-      </video>
+    <div class="video-grid">
+      <div class="video-responsive">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <div class="video-responsive">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <div class="video-responsive">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <div class="video-responsive">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <div class="video-responsive">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <div class="video-responsive">
+        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
+          <source src="video.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
     </div>
-    <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
-          <source src="video.mp4" type="video/mp4">
-          Ваш браузер не поддерживает видео.
-        </video>
-      </div>
-      <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-        <video controls autoplay muted style="width:100%; max-width:800px; display:block; background:#000;">
-          <source src="video.mp4" type="video/mp4">
-          Ваш браузер не поддерживает видео.
-        </video>
-      </div>
   </div>
   <!-- Удаляю подключение Plyr -->
   <script>
