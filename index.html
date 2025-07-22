@@ -36,6 +36,13 @@
       height: 100%;
       border: none;
     }
+    .img-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
     @media (max-width: 600px) {
       .container {
         padding: 4px;
@@ -45,10 +52,22 @@
 </head>
 <body>
   <div class="container">
+    <div class="img-row">
+      <img src="cat-cute-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+      <img src="cat-cute-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+      <img src="cat-cute-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+      <img src="cat-cute-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+    </div>
     <div class="video-responsive" style="margin: 0 auto; display: flex; justify-content: center; align-items: center;">
       <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
               allowfullscreen></iframe>
     </div>
+    <div class="img-row">
+        <img src="cat-dance-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+        <img src="cat-dance-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+        <img src="cat-dance-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+        <img src="cat-dance-cat.gif" alt="Котик" style="max-width:20%; height:auto;">
+      </div>
   </div>
 </body>
 </html> 
