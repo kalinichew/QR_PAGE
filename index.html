@@ -3,227 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
   <title>Приветик</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
+      width: 100%;
+      min-height: 100%;
       margin: 0;
-      margin-top: 100px;
-      padding: 0;
-      background: #111;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      background: #000;
       font-family: Arial, sans-serif;
     }
-    .disco {
-      animation: disco-bg 10s ease-in-out infinite;
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
     }
-    @keyframes disco-bg {
-      0%   { background: #ff3b3b; }
-      20%  { background: #ffe066; }
-      40%  { background: #23a6d5; }
-      60%  { background: #e73c7e; }
-      80%  { background: #23d5ab; }
-      100% { background: #ff3b3b; }
+
+    #start-block {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
     }
-    .container {
-      width: 90%;
-      max-width: 1600px;
-      padding: 10px;
-      margin-left: 13px
-      /* box-sizing: border-box; */
+
+    #start-btn {
+      max-width: 100%;
+      padding: 18px 32px;
+      border: 0;
+      border-radius: 16px;
+      background: #23a6d5;
+      color: #fff;
+      box-shadow: 0 4px 24px #0006;
+      font: inherit;
+      font-size: clamp(1.25rem, 5vw, 2rem);
+      cursor: pointer;
     }
-    .video-responsive {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      margin: 0;
-    }
-    .video-grid {
-      /* display: grid; */
-      /* grid-template-columns: 1fr; */
-      /* gap: 32px; */
-      /* width: 100%; */
-      /* margin: 0 auto 32px auto; */
-    }
-    .video-responsive video {
-      position: absolute;
-      top: 0;
-      left: 0;
+
+    #main-content {
+      display: none;
       width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
+      height: 100vh;
+      height: 100dvh;
       background: #000;
     }
-    .img-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    @media (max-width: 600px) {
-      .container {
-        padding: 8px;
-      }
-      #karaoke {
-        font-size: 1.2em;
-      }
-      h1 {
-        font-size: 1.5em;
-      }
-    }
-    #karaoke {
-      font-size: 0.7em;
-      color: #fff;
-      text-align: center;
-      min-height: 2em;
-      font-weight: bold;
-      letter-spacing: 1px;
-      position: relative;
-    }
-    .karaoke-line {
-      position: relative;
-      display: inline-block;
-      color: #fff;
-      z-index: 1;
-      font-family: inherit;
-      text-shadow: 2px 2px 8px #000;
-    }
-    .karaoke-fill {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 0%;
-      color: #ffe066;
-      white-space: pre;
-      overflow: hidden;
-      z-index: 2;
-      pointer-events: none;
-      transition: width linear;
-      font-family: inherit;
+
+    #rickroll {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
     }
   </style>
 </head>
 <body>
-  <div id="start-block" style="width:100vw; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-    <button id="start-btn" style="font-size:2em; padding: 24px 48px; border-radius: 16px; border:none; background: #23a6d5; color:#fff; cursor:pointer; box-shadow:0 4px 24px #0006;">Хочу нажать</button>
+  <div id="start-block">
+    <button id="start-btn" type="button">Хочу нажать</button>
   </div>
-  <div id="main-content" style="display:none; width: 100%;">
-    <div style="width:100%; max-width:900px; margin: 32px auto 24px auto; text-align:center;">
-      <h1 style = "text-shadow: 2px 2px 8px #000;">Ты стал посетителем № <span id="visitor-number"></span></h1>
-      <h1 style="font-size:2.5em; margin-bottom:0.2em; color:#fff; text-shadow: 2px 2px 8px #000; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
-        <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
-        <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
-        <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
-      </h1>
-    </div>
-    <div class="container">
-      <div class="video-grid">
-        <div class="video-responsive">
-          <video id="rickroll" controls>
-            <source src="video.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-          </video>
-        </div>
-      </div>
-      <div id="karaoke" style="margin: 32px auto 0 auto;"></div>
-    </div>
-    <h1 style="font-size:2.5em; margin-bottom:0.2em; color:#fff; text-shadow: 2px 2px 8px #000; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
-        <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
-        <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
-        <img src="trollface.png" alt="trollface" style="height: 1.2em; vertical-align: middle;">
-    </h1>
-  </div>
+
+  <main id="main-content">
+    <video id="rickroll" controls playsinline>
+      <source src="video.mp4" type="video/mp4">
+      Ваш браузер не поддерживает видео.
+    </video>
+  </main>
+
   <script>
-  const number = Math.floor(Math.random() * 4000 + 1000);
-  document.getElementById('visitor-number').textContent = number;
-
-    document.getElementById('start-btn').addEventListener('click', function() {
-      document.getElementById('start-block').style.display = 'none';
-      document.getElementById('main-content').style.display = '';
-      document.body.classList.add('disco');
-      var video = document.getElementById('rickroll');
-      video.muted = false;
-      video.volume = 1.0;
-      video.play();
-    });
-
-    const karaokeLines = [
-{ time: 18, text: "We're no strangers to love" },
-  { time: 23, text: "You know the rules and so do I" },
-  { time: 27, text: "A full commitment's what I'm thinking of" },
-  { time: 31, text: "You wouldn't get this from any other guy" },
-  { time: 35, text: "I just wanna tell you how I'm feeling" },
-  { time: 41, text: "Gotta make you understand" },
-  { time: 43, text: "Never gonna give you up" },
-  { time: 45, text: "Never gonna let you down" },
-  { time: 47, text: "Never gonna run around and desert you" },
-  { time: 52, text: "Never gonna make you cry" },
-  { time: 54, text: "Never gonna say goodbye" },
-  { time: 56, text: "Never gonna tell a lie and hurt you" },
-  { time: 61, text: "We've known each other for so long" },
-  { time: 65, text: "Your heart's been aching, but you're too shy to say it" },
-  { time: 69, text: "Inside, we both know what's been going on" },
-  { time: 74, text: "We know the game and we're gonna play it" },
-  { time: 78, text: "And if you ask me how I'm feeling" },
-  { time: 83, text: "Don't tell me you're too blind to see" },
-  { time: 86, text: "Never gonna give you up" },
-  { time: 87, text: "Never gonna let you down" },
-  { time: 90, text: "Never gonna run around and desert you" },
-  { time: 94, text: "Never gonna make you cry" },
-  { time: 96, text: "Never gonna say goodbye" },
-  { time: 98, text: "Never gonna tell a lie and hurt you" },
-  { time: 102, text: "Never gonna give you up" },
-  { time: 104, text: "Never gonna let you down" },
-  { time: 107, text: "Never gonna run around and desert you" },
-  { time: 111, text: "Never gonna make you cry" },
-  { time: 113, text: "Never gonna say goodbye" },
-  { time: 115, text: "Never gonna tell a lie and hurt you" },
-  { time: 120, text: "(Ooh) Give you up" },
-  { time: 129, text: "Never gonna give, never gonna give" },
-  { time: 131, text: "(Give you up)" },
-  { time: 135, text: "Never gonna give, never gonna give" },
-  { time: 138, text: "We've known each other for so long" },
-  { time: 142, text: "Your heart's been aching, but you're too shy to say it" },
-  { time: 146, text: "Inside, we both know what's been going on" },
-  { time: 150, text: "We know the game and we're gonna play it" },
-  { time: 153, text: "I just wanna tell you how I'm feeling" },
-  { time: 159, text: "Gotta make you understand" },
-  { time: 161, text: "Never gonna give you up" },
-  { time: 163, text: "Never gonna let you down" },
-  { time: 166, text: "Never gonna run around and desert you" },
-  { time: 170, text: "Never gonna make you cry" },
-  { time: 172, text: "Never gonna say goodbye" },
-  { time: 174, text: "Never gonna tell a lie and hurt you" },
-    ];
+    const startBlock = document.getElementById('start-block');
+    const mainContent = document.getElementById('main-content');
     const video = document.getElementById('rickroll');
-    const karaokeDiv = document.getElementById('karaoke');
-    let currentLine = -1;
-    video.addEventListener('timeupdate', function() {
-      const t = video.currentTime;
-      let lineIndex = karaokeLines.length - 1;
-      for (let i = 0; i < karaokeLines.length; i++) {
-        if (t < karaokeLines[i].time) {
-          lineIndex = i - 1;
-          break;
-        }
-      }
-      if (lineIndex !== currentLine && lineIndex >= 0) {
-        const text = karaokeLines[lineIndex].text;
-        const nextTime = karaokeLines[lineIndex + 1] ? karaokeLines[lineIndex + 1].time : video.duration;
-        const duration = Math.max(0.1, nextTime - karaokeLines[lineIndex].time);
-        karaokeDiv.innerHTML = `<span class="karaoke-line">${text}<span class="karaoke-fill">${text}</span></span>`;
-        const fill = karaokeDiv.querySelector('.karaoke-fill');
-        fill.style.transition = `width ${duration}s linear`;
-        requestAnimationFrame(() => { fill.style.width = '100%'; });
-        currentLine = lineIndex;
+
+    document.getElementById('start-btn').addEventListener('click', async () => {
+      startBlock.remove();
+      mainContent.style.display = 'block';
+
+      try {
+        await video.play();
+      } catch (error) {
+        // Если браузер не разрешит автозапуск, останется доступна кнопка Play в плеере.
       }
     });
   </script>
 </body>
 </html>
-
-
