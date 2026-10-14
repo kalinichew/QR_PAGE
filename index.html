@@ -543,8 +543,7 @@
       result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    function finishSpin(winnerCard) {
-      winnerCard.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+    function finishSpin() {
       showResult(selectedOffer);
       reelShell.classList.remove('is-spinning');
       reelViewport.classList.remove('spinning');
@@ -577,7 +576,7 @@
 
       if (reducedMotion) {
         reelTrack.style.transform = `translateX(-${targetOffset}px)`;
-        finishSpin(winnerCard);
+        finishSpin();
         return;
       }
 
@@ -591,7 +590,7 @@
       reelTrack.addEventListener('transitionend', function onSpinEnd(event) {
         if (event.propertyName !== 'transform') return;
         reelTrack.removeEventListener('transitionend', onSpinEnd);
-        finishSpin(winnerCard);
+        finishSpin();
       });
     });
 
