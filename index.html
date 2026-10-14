@@ -40,10 +40,9 @@
       background: #000;
     }
 
-    #sound-btn {
+    .action-btn {
       position: absolute;
       left: 50%;
-      bottom: max(24px, env(safe-area-inset-bottom));
       transform: translateX(-50%);
       max-width: calc(100% - 32px);
       padding: 14px 24px;
@@ -57,27 +56,57 @@
       cursor: pointer;
     }
 
-    #sound-btn[hidden] {
+    #sound-btn {
+      bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    #start-btn {
+      top: 50%;
+      bottom: auto;
+      transform: translate(-50%, -50%);
+    }
+
+    .action-btn[hidden] {
       display: none;
     }
   </style>
 </head>
 <body>
   <main id="main-content">
-    <video id="rickroll" controls autoplay muted playsinline>
+    <video id="rickroll" controls autoplay muted playsinline webkit-playsinline>
       <source src="video.mp4" type="video/mp4">
       Ваш браузер не поддерживает видео.
     </video>
-    <button id="sound-btn" type="button">Включить звук</button>
+    <button id="start-btn" class="action-btn" type="button" hidden>Запустить видео</button>
+    <button id="sound-btn" class="action-btn" type="button">Включить звук</button>
   </main>
 
   <script>
     const video = document.getElementById('rickroll');
+    const startButton = document.getElementById('start-btn');
     const soundButton = document.getElementById('sound-btn');
 
-    // Запускаем видео без звука: браузеры обычно разрешают такой автозапуск.
-    video.play().catch(() => {
-      // Если автозапуск запрещён, пользователь сможет запустить видео через элементы плеера.
+    // Явно отключаем звук до попытки запуска: это необходимо для автозапуска в Safari на iPhone.
+    video.muted = true;
+    video.defaultMuted = true;
+
+    video.play().then(() => {
+      startButton.hidden = true;
+    }).catch(() => {
+      // iOS может запретить автозапуск, например, в режиме энергосбережения.
+      // В таком случае показываем кнопку, запускающую видео без звука по нажатию.
+      startButton.hidden = false;
+    });
+
+    startButton.addEventListener('click', async () => {
+      video.muted = true;
+
+      try {
+        await video.play();
+        startButton.hidden = true;
+      } catch (error) {
+        // Оставляем кнопку на экране, если браузер всё ещё не смог начать воспроизведение.
+      }
     });
 
     soundButton.addEventListener('click', async () => {
@@ -86,9 +115,10 @@
 
       try {
         await video.play();
+        startButton.hidden = true;
         soundButton.hidden = true;
       } catch (error) {
-        // Оставляем кнопку видимой, чтобы пользователь мог попробовать ещё раз.
+        // Оставляем кнопку включения звука доступной для повторной попытки.
         video.muted = true;
       }
     });
