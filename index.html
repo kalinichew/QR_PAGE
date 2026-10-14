@@ -29,13 +29,10 @@
       width: 100%;
       height: 100vh;
       height: 100dvh;
-      overflow: hidden;
       background: #000;
     }
 
     #rickroll {
-      position: relative;
-      z-index: 0;
       display: block;
       width: 100%;
       height: 100%;
@@ -43,19 +40,8 @@
       background: #000;
     }
 
-    #light-show {
-      position: absolute;
-      z-index: 1;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-
     .action-btn {
       position: absolute;
-      z-index: 2;
       left: 50%;
       transform: translateX(-50%);
       max-width: calc(100% - 32px);
@@ -83,12 +69,6 @@
     .action-btn[hidden] {
       display: none;
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      #light-show {
-        display: none;
-      }
-    }
   </style>
 </head>
 <body>
@@ -97,89 +77,23 @@
       <source src="video.mp4" type="video/mp4">
       Ваш браузер не поддерживает видео.
     </video>
-    <canvas id="light-show" aria-hidden="true"></canvas>
     <button id="start-btn" class="action-btn" type="button" hidden>Запустить видео</button>
     <button id="sound-btn" class="action-btn" type="button">Включить звук</button>
   </main>
 
   <script>
     const video = document.getElementById('rickroll');
-    const lightShow = document.getElementById('light-show');
     const startButton = document.getElementById('start-btn');
     const soundButton = document.getElementById('sound-btn');
-    const context = lightShow.getContext('2d');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Явно отключаем звук до попытки запуска: это необходимо для автозапуска в Safari на iPhone.
     video.muted = true;
     video.defaultMuted = true;
 
-    function resizeLightShow() {
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      lightShow.width = Math.round(window.innerWidth * pixelRatio);
-      lightShow.height = Math.round(window.innerHeight * pixelRatio);
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    }
-
-    function drawGlow(x, y, radius, color, strength) {
-      const glow = context.createRadialGradient(x, y, 0, x, y, radius);
-      glow.addColorStop(0, `hsla(${color}, 100%, 62%, ${strength})`);
-      glow.addColorStop(1, `hsla(${color}, 100%, 62%, 0)`);
-      context.fillStyle = glow;
-      context.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-    }
-
-    let animationFrame = null;
-
-    function animateLights() {
-      animationFrame = null;
-
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      context.clearRect(0, 0, width, height);
-
-      if (video.paused || video.ended || prefersReducedMotion) {
-        return;
-      }
-
-      // Клип — Rick Astley, "Never Gonna Give You Up" (примерно 113 ударов в минуту).
-      // Пульс привязан к времени самого видео, поэтому свет не расходится с воспроизведением.
-      const beatLength = 60 / 113;
-      const beatPosition = (video.currentTime % beatLength) / beatLength;
-      const pulse = Math.pow(Math.max(0, 1 - beatPosition / 0.72), 2);
-      const beatNumber = Math.floor(video.currentTime / beatLength);
-      const hue = (beatNumber * 47 + 185) % 360;
-      const strength = 0.38 * pulse;
-
-      context.globalCompositeOperation = 'screen';
-      drawGlow(width * 0.08, height * 0.52, Math.max(width, height) * 0.48, hue, strength);
-      drawGlow(width * 0.92, height * 0.48, Math.max(width, height) * 0.48, (hue + 115) % 360, strength);
-      drawGlow(width * 0.5, height * 0.02, Math.max(width, height) * 0.34, (hue + 235) % 360, strength * 0.55);
-      context.globalCompositeOperation = 'source-over';
-
-      animationFrame = window.requestAnimationFrame(animateLights);
-    }
-
-    function clearLights() {
-      if (animationFrame !== null) {
-        window.cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-      }
-      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    }
-
-    window.addEventListener('resize', resizeLightShow);
+    // Скрываем запасную кнопку при запуске через собственную или штатную кнопку плеера.
     video.addEventListener('play', () => {
-      // Скрываем запасную кнопку, даже если пользователь запустил видео штатными элементами плеера.
       startButton.hidden = true;
-      if (!prefersReducedMotion && animationFrame === null) {
-        animateLights();
-      }
     });
-    video.addEventListener('pause', clearLights);
-    video.addEventListener('ended', clearLights);
-
-    resizeLightShow();
 
     video.play().catch(() => {
       // iOS может запретить автозапуск, например, в режиме энергосбережения.
