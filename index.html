@@ -13,28 +13,22 @@
       color: #f7f7fb;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       min-width: 320px;
       min-height: 100vh;
       min-height: 100dvh;
       margin: 0;
-      background:
-        radial-gradient(ellipse at 50% -30%, #39324f 0, transparent 55%),
-        #101116;
+      background: radial-gradient(ellipse at 50% -30%, #39324f 0, transparent 55%), #101116;
     }
 
-    button {
-      font: inherit;
-    }
+    button { font: inherit; }
 
     .page {
       width: min(100%, 1080px);
       margin: 0 auto;
-      padding: 18px 20px 64px;
+      padding: 18px 20px 48px;
     }
 
     .video-frame {
@@ -84,84 +78,68 @@
       font-weight: 700;
     }
 
-    .video-action[hidden] {
-      display: none;
-    }
+    .video-action[hidden] { display: none; }
 
     .roulette {
-      padding-top: clamp(32px, 7vw, 60px);
-      text-align: center;
+      display: flex;
+      min-height: 300px;
+      align-items: center;
+      justify-content: center;
+      padding: 34px 0;
     }
 
-    .eyebrow {
-      margin: 0 0 10px;
-      color: #b7a8ff;
-      font-size: 0.78rem;
+    #spin-btn {
+      min-width: 240px;
+      padding: 17px 30px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #987aff, #6846df);
+      color: #fff;
+      font-size: 1.1rem;
       font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      box-shadow: 0 10px 30px #6846df55;
+      cursor: pointer;
+      transition: transform 160ms ease, opacity 160ms ease;
     }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(2rem, 6vw, 3.4rem);
-      line-height: 1.05;
-      letter-spacing: -0.045em;
-    }
+    #spin-btn:hover:not(:disabled) { transform: translateY(-2px); }
+    #spin-btn:disabled { cursor: wait; opacity: 0.72; }
+    #spin-btn[hidden] { display: none; }
 
-    .intro {
-      max-width: 580px;
-      margin: 14px auto 28px;
-      color: #b7b7c3;
-      font-size: clamp(0.95rem, 2.5vw, 1.08rem);
-      line-height: 1.55;
-    }
-
-    .reel-shell {
+    .reel-stage {
       position: relative;
-      padding: 18px 0;
+      width: 100%;
+      padding: 20px 0;
     }
+
+    .reel-stage[hidden],
+    .winner-card[hidden] { display: none; }
 
     .reel-viewport {
-      overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
-    }
-
-    .reel-viewport::-webkit-scrollbar {
-      display: none;
-    }
-
-    .reel-viewport.spinning {
       overflow: hidden;
-      mask-image: none;
-      -webkit-mask-image: none;
+      width: 100%;
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     }
 
     .reel-track {
       display: flex;
       width: max-content;
       gap: 14px;
-      padding: 0 max(7vw, calc((100vw - 1080px) / 2));
-      transition: transform 5.4s cubic-bezier(0.08, 0.72, 0.12, 1);
+      transition: transform 5.2s cubic-bezier(0.08, 0.72, 0.12, 1);
       will-change: transform;
     }
 
     .reel-card {
       display: flex;
       flex: 0 0 clamp(238px, 72vw, 300px);
-      min-height: 192px;
+      min-height: 190px;
       flex-direction: column;
       align-items: flex-start;
       padding: 20px;
       border: 1px solid #ffffff22;
       border-radius: 20px;
-      background:
-        radial-gradient(circle at 100% 0, var(--glow), transparent 48%),
-        #20212a;
+      background: radial-gradient(circle at 100% 0, var(--glow), transparent 48%), #20212a;
       text-align: left;
     }
 
@@ -179,27 +157,9 @@
       font-weight: 700;
     }
 
-    .reel-card__name {
-      margin: 0 0 7px;
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    .reel-card__description {
-      margin: 0;
-      color: #c6c6d0;
-      font-size: 0.88rem;
-      line-height: 1.4;
-    }
-
-    .reel-card__code {
-      margin-top: auto;
-      padding-top: 15px;
-      color: #b8a9ff;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-    }
+    .reel-card__name { margin: 0 0 7px; font-size: 1.1rem; }
+    .reel-card__description { margin: 0; color: #c6c6d0; font-size: 0.88rem; line-height: 1.4; }
+    .reel-card__code { margin-top: auto; padding-top: 15px; color: #b8a9ff; font-size: 0.8rem; font-weight: 700; }
 
     .reel-marker {
       position: absolute;
@@ -211,10 +171,8 @@
       border-radius: 3px;
       background: #bcaeff;
       box-shadow: 0 0 18px #9f83ffb3;
-      opacity: 0;
       pointer-events: none;
       transform: translateX(-50%);
-      transition: opacity 180ms ease;
     }
 
     .reel-marker::before,
@@ -229,93 +187,47 @@
       transform: translateX(-50%);
     }
 
-    .reel-marker::before {
-      top: 0;
-      border-top: 12px solid #bcaeff;
-    }
+    .reel-marker::before { top: 0; border-top: 12px solid #bcaeff; }
+    .reel-marker::after { bottom: 0; border-bottom: 12px solid #bcaeff; }
 
-    .reel-marker::after {
-      bottom: 0;
-      border-bottom: 12px solid #bcaeff;
-    }
-
-    .reel-shell.is-spinning .reel-marker {
-      opacity: 1;
-    }
-
-    #spin-btn,
-    #copy-btn {
-      border: 0;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #987aff, #6846df);
-      color: #fff;
-      font-weight: 700;
-      box-shadow: 0 10px 30px #6846df55;
-      cursor: pointer;
-      transition: transform 160ms ease, opacity 160ms ease;
-    }
-
-    #spin-btn {
-      min-width: 220px;
-      margin-top: 7px;
-      padding: 16px 28px;
-      font-size: 1.08rem;
-    }
-
-    #spin-btn:hover:not(:disabled),
-    #copy-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    #spin-btn:disabled {
-      cursor: wait;
-      opacity: 0.72;
-    }
-
-    .result {
-      max-width: 620px;
-      margin: 30px auto 0;
-      padding: clamp(22px, 5vw, 34px);
+    .winner-card {
+      width: min(100%, 560px);
+      padding: clamp(24px, 5vw, 38px);
       border: 1px solid #a693ff65;
       border-radius: 24px;
-      background:
-        radial-gradient(circle at 100% 0, #8a68ff27, transparent 45%),
-        #1b1b24;
+      background: radial-gradient(circle at 100% 0, #8a68ff27, transparent 45%), #1b1b24;
       box-shadow: 0 20px 60px #0005;
       text-align: left;
-      animation: result-in 360ms ease-out both;
+      animation: winner-in 360ms ease-out both;
     }
 
-    .result[hidden] {
-      display: none;
+    @keyframes winner-in {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    @keyframes result-in {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .result__eyebrow {
-      margin: 0 0 9px;
+    .winner-card__label {
+      margin: 0 0 10px;
       color: #b7a8ff;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
-    .result h2 {
+    .winner-card h1 {
       margin: 0;
-      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+      line-height: 1.1;
     }
 
-    .result__description {
-      margin: 12px 0 20px;
+    .winner-card__description {
+      margin: 14px 0 22px;
       color: #d0cfda;
       line-height: 1.55;
     }
 
-    .result__code-row {
+    .winner-card__code-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -326,7 +238,7 @@
       background: #111218;
     }
 
-    .result__code {
+    .winner-card__code {
       flex: 1;
       min-width: 120px;
       overflow-wrap: anywhere;
@@ -336,9 +248,22 @@
       letter-spacing: 0.09em;
     }
 
-    #copy-btn {
-      padding: 11px 16px;
+    .winner-card__action {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #987aff, #6846df);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
     }
+
+    .winner-card__action[hidden] { display: none; }
 
     #copy-status {
       min-height: 1.3em;
@@ -347,40 +272,16 @@
       font-size: 0.88rem;
     }
 
-    .footnote {
-      max-width: 650px;
-      margin: 22px auto 0;
-      color: #8e8e9b;
-      font-size: 0.82rem;
-      line-height: 1.45;
-    }
-
     @media (max-width: 540px) {
-      .page {
-        padding: 10px 12px 42px;
-      }
-
-      .video-frame {
-        border-radius: 15px;
-      }
-
-      #sound-btn {
-        top: 9px;
-        right: 9px;
-        padding: 9px 12px;
-        font-size: 0.85rem;
-      }
-
-      .reel-card {
-        min-height: 204px;
-      }
+      .page { padding: 10px 12px 32px; }
+      .video-frame { border-radius: 15px; }
+      #sound-btn { top: 9px; right: 9px; padding: 9px 12px; font-size: 0.85rem; }
+      .roulette { min-height: 250px; }
+      .reel-card { min-height: 204px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -399,73 +300,97 @@
       <button id="sound-btn" class="video-action" type="button" aria-pressed="false">Включить звук</button>
     </section>
 
-    <section class="roulette" aria-labelledby="roulette-title">
-      <p class="eyebrow">Маленький сюрприз</p>
-      <h1 id="roulette-title">Крути и забирай скидку</h1>
-      <p class="intro">Нажми кнопку — карточки закрутятся и выберут один промокод для тебя.</p>
+    <section class="roulette" aria-label="Рулетка промокодов">
+      <button id="spin-btn" type="button" disabled>Загружаем предложения…</button>
 
-      <div class="reel-shell" id="reel-shell">
-        <div class="reel-viewport" id="reel-viewport" aria-label="Карточки со скидками">
+      <div class="reel-stage" id="reel-stage" hidden>
+        <div class="reel-viewport" id="reel-viewport">
           <div class="reel-track" id="reel-track"></div>
         </div>
         <div class="reel-marker" aria-hidden="true"></div>
       </div>
 
-      <button id="spin-btn" type="button">Крутить рулетку</button>
-
-      <section class="result" id="result" aria-live="polite" hidden>
-        <p class="result__eyebrow">Тебе выпало</p>
-        <h2 id="result-name"></h2>
-        <p class="result__description" id="result-description"></p>
-        <div class="result__code-row">
-          <code class="result__code" id="result-code"></code>
-          <button id="copy-btn" type="button">Скопировать код</button>
+      <article class="winner-card" id="winner-card" aria-live="polite" hidden>
+        <p class="winner-card__label">Тебе выпало</p>
+        <h1 id="winner-name"></h1>
+        <p class="winner-card__description" id="winner-description"></p>
+        <div class="winner-card__code-row">
+          <code class="winner-card__code" id="winner-code"></code>
+          <button class="winner-card__action" id="copy-btn" type="button">Скопировать</button>
+          <a class="winner-card__action" id="source-link" target="_blank" rel="noopener noreferrer" hidden>Открыть Pepper</a>
         </div>
         <p id="copy-status" role="status"></p>
-      </section>
-
-      <p class="footnote">Условия и срок действия промокода могут зависеть от магазина и региона.</p>
+      </article>
     </section>
   </main>
 
   <script>
-    const offers = [
-      { name: 'Самокат', description: 'Скидка 300 ₽ на первый заказ от 800 ₽', code: 'BQH6A', color: '#ed8b61' },
-      { name: 'Яндекс Еда', description: 'Скидка 500 ₽ на первый заказ из ресторанов от 1000 ₽', code: 'PPR500', color: '#f2c94c' },
-      { name: 'Пятёрочка Доставка', description: 'Скидка 750 ₽ на первый заказ от 1500 ₽ + бесплатная доставка', code: 'HSMDDDSP7', color: '#e95d68' },
-      { name: 'ВкусВилл', description: 'Скидка 200 ₽ на первый заказ с доставкой от 1000 ₽', code: 'DPBC5', color: '#5fb989' },
-      { name: 'Купер (СберМаркет)', description: 'Скидка 600 ₽ на первый заказ из супермаркетов от 1500 ₽', code: 'PEPPER600', color: '#76a5ff' },
-      { name: 'Винлаб', description: 'Скидка 10% на напитки со значком WinClub при самовывозе', code: 'PFSEP9229', color: '#ba87ee' },
-      { name: "Rostic's", description: '2 баскета или бургера по цене 1 (по средам с собой)', code: '5050', color: '#f17953' },
-      { name: 'Додо Пицца', description: 'Пепперони 25 см в подарок при заказе от 999 ₽', code: 'PEPPER25', color: '#f08454' },
-      { name: 'Магнит Доставка', description: 'Скидка 30% на первый заказ в приложении от 1000 ₽', code: 'ЭКСПРЕСС30', color: '#d95b6b' },
-      { name: 'Перекрёсток Впрок', description: 'Скидка 1000 ₽ на первые три заказа от 3500 ₽', code: 'VPROK1000', color: '#62bd86' },
-      { name: 'Лента Онлайн', description: 'Скидка 25% на первые два заказа от 1800 ₽', code: 'LENTA25', color: '#7486e8' },
-      { name: 'АШАН Доставка', description: 'Скидка 500 ₽ на заказ от 2500 ₽ для новых клиентов', code: 'AUCHAN500', color: '#e15d62' },
-      { name: 'Четыре Лапы', description: 'Скидка 15% на корма и аксессуары для питомцев от 2000 ₽', code: 'PAWS15', color: '#dc8b59' },
-      { name: 'Золотое Яблоко', description: 'Дополнительная скидка 10% на бьюти-корзину от 3000 ₽', code: 'APPLE10', color: '#dd73a1' },
-      { name: 'М.Видео', description: 'Скидка 1000 ₽ на бытовую технику и гаджеты от 5000 ₽', code: 'MVIDEO1000', color: '#db584e' },
-      { name: 'Спортмастер', description: 'Дополнительная скидка 20% на одежду и обувь в приложении', code: 'SPORT20', color: '#64a1d9' },
-      { name: 'ЕАПТЕКА', description: 'Скидка 400 ₽ на первый заказ лекарств и витаминов от 2000 ₽', code: 'EAPTEKA400', color: '#57b8a4' },
-      { name: 'Читай-город', description: 'Скидка 25% на все книги из каталога без ограничений', code: 'BOOKS25', color: '#be8add' },
-      { name: 'Яндекс Маркет', description: 'Скидка 500 ₽ на первый заказ в приложении от 2500 ₽', code: 'MARKET500', color: '#f0b64d' },
-      { name: 'Kari', description: 'Дополнительная скидка 15% на обувь и сумки к акции 1+1=3', code: 'KARI15', color: '#69b6cd' }
-    ];
-
     const video = document.getElementById('rickroll');
     const startButton = document.getElementById('start-btn');
     const soundButton = document.getElementById('sound-btn');
-    const reelShell = document.getElementById('reel-shell');
+    const spinButton = document.getElementById('spin-btn');
+    const reelStage = document.getElementById('reel-stage');
     const reelViewport = document.getElementById('reel-viewport');
     const reelTrack = document.getElementById('reel-track');
-    const spinButton = document.getElementById('spin-btn');
-    const result = document.getElementById('result');
-    const resultName = document.getElementById('result-name');
-    const resultDescription = document.getElementById('result-description');
-    const resultCode = document.getElementById('result-code');
+    const winnerCard = document.getElementById('winner-card');
+    const winnerName = document.getElementById('winner-name');
+    const winnerDescription = document.getElementById('winner-description');
+    const winnerCode = document.getElementById('winner-code');
     const copyButton = document.getElementById('copy-btn');
+    const sourceLink = document.getElementById('source-link');
     const copyStatus = document.getElementById('copy-status');
+
+    let offers = [];
     let selectedOffer = null;
+
+    function isSafePepperUrl(value) {
+      if (!value) return '';
+      try {
+        const url = new URL(value, window.location.href);
+        const host = url.hostname.toLowerCase();
+        return url.protocol === 'https:' && (host === 'pepper.ru' || host.endsWith('.pepper.ru')) ? url.href : '';
+      } catch (error) {
+        return '';
+      }
+    }
+
+    function normalizeOffer(offer) {
+      if (!offer || offer.active === false || offer.isExpired === true) return null;
+      if (offer.expiresAt && Date.parse(offer.expiresAt) <= Date.now()) return null;
+
+      const name = String(offer.merchant || offer.name || '').trim();
+      const description = String(offer.description || offer.title || '').trim();
+      const code = String(offer.code || offer.voucherCode || '').trim();
+      if (!name || !description || !code) return null;
+
+      return {
+        name: name,
+        description: description,
+        code: code,
+        sourceUrl: isSafePepperUrl(offer.sourceUrl || offer.url),
+        color: typeof offer.color === 'string' ? offer.color : '#8a72e8'
+      };
+    }
+
+    async function loadOffers() {
+      spinButton.disabled = true;
+      spinButton.textContent = 'Загружаем предложения…';
+
+      try {
+        const response = await fetch('./offers.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Не удалось загрузить предложения');
+        const payload = await response.json();
+        const list = Array.isArray(payload) ? payload : payload.offers;
+        offers = Array.isArray(list) ? list.map(normalizeOffer).filter(Boolean) : [];
+        if (!offers.length) throw new Error('Нет доступных предложений');
+        spinButton.disabled = false;
+        spinButton.textContent = 'Крутить рулетку';
+      } catch (error) {
+        offers = [];
+        spinButton.disabled = false;
+        spinButton.textContent = 'Повторить загрузку';
+      }
+    }
 
     function makeCard(offer, number) {
       const card = document.createElement('article');
@@ -474,7 +399,7 @@
 
       const badge = document.createElement('span');
       badge.className = 'reel-card__number';
-      badge.textContent = number;
+      badge.textContent = String(number);
 
       const name = document.createElement('h2');
       name.className = 'reel-card__name';
@@ -486,13 +411,81 @@
 
       const code = document.createElement('span');
       code.className = 'reel-card__code';
-      code.textContent = `ПРОМОКОД · ${offer.code}`;
+      code.textContent = 'ПРОМОКОД · ' + offer.code;
 
       card.append(badge, name, description, code);
       return card;
     }
 
-    offers.forEach((offer, index) => reelTrack.append(makeCard(offer, index + 1)));
+    function showWinner(offer) {
+      selectedOffer = offer;
+      winnerName.textContent = offer.name;
+      winnerDescription.textContent = offer.description;
+      winnerCode.textContent = offer.code;
+      copyStatus.textContent = '';
+      sourceLink.href = offer.sourceUrl || '';
+      sourceLink.hidden = !offer.sourceUrl;
+      reelStage.hidden = true;
+      winnerCard.hidden = false;
+    }
+
+    function startSpin() {
+      if (!offers.length) {
+        loadOffers();
+        return;
+      }
+
+      const winnerIndex = Math.floor(Math.random() * offers.length);
+      selectedOffer = offers[winnerIndex];
+      const landingIndex = 46;
+      const sequence = Array.from(
+        { length: landingIndex },
+        () => offers[Math.floor(Math.random() * offers.length)]
+      );
+      sequence.push(selectedOffer);
+
+      reelTrack.replaceChildren(...sequence.map((offer, index) => makeCard(offer, index + 1)));
+      reelTrack.style.transition = 'none';
+      reelTrack.style.transform = 'translateX(0)';
+      reelStage.hidden = false;
+      winnerCard.hidden = true;
+      spinButton.hidden = true;
+      reelViewport.scrollLeft = 0;
+
+      // Принудительно применяем начальную позицию перед запуском CSS-перехода.
+      void reelTrack.offsetWidth;
+
+      const winnerTile = reelTrack.children[landingIndex];
+      const distance = winnerTile.offsetLeft + winnerTile.offsetWidth / 2 - reelViewport.clientWidth / 2;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let finished = false;
+      let fallbackTimer;
+
+      function finish() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(fallbackTimer);
+        showWinner(selectedOffer);
+      }
+
+      if (reducedMotion) {
+        finish();
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        reelTrack.style.transition = '';
+        reelTrack.style.transform = 'translateX(-' + distance + 'px)';
+      });
+
+      reelTrack.addEventListener('transitionend', function onEnd(event) {
+        if (event.propertyName !== 'transform') return;
+        reelTrack.removeEventListener('transitionend', onEnd);
+        finish();
+      });
+
+      fallbackTimer = window.setTimeout(finish, 5700);
+    }
 
     video.muted = true;
     video.defaultMuted = true;
@@ -507,12 +500,11 @@
 
     startButton.addEventListener('click', async () => {
       video.muted = true;
-
       try {
         await video.play();
         startButton.hidden = true;
       } catch (error) {
-        // Кнопка остаётся видимой, если браузер не смог начать воспроизведение.
+        // Кнопка остаётся доступной для повторной попытки.
       }
     });
 
@@ -533,65 +525,12 @@
       }
     });
 
-    function showResult(offer) {
-      selectedOffer = offer;
-      resultName.textContent = offer.name;
-      resultDescription.textContent = offer.description;
-      resultCode.textContent = offer.code;
-      copyStatus.textContent = '';
-      result.hidden = false;
-      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    function finishSpin() {
-      showResult(selectedOffer);
-      reelShell.classList.remove('is-spinning');
-      reelViewport.classList.remove('spinning');
-      spinButton.disabled = false;
-      spinButton.textContent = 'Крутить ещё раз';
-    }
-
     spinButton.addEventListener('click', () => {
-      const winnerIndex = Math.floor(Math.random() * offers.length);
-      selectedOffer = offers[winnerIndex];
-
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const landingIndex = 48;
-      const reelOffers = Array.from({ length: landingIndex }, () => offers[Math.floor(Math.random() * offers.length)]);
-      reelOffers.push(selectedOffer);
-
-      reelTrack.replaceChildren(...reelOffers.map((offer) => makeCard(offer, offers.indexOf(offer) + 1)));
-      reelTrack.style.transition = 'none';
-      reelTrack.style.transform = 'translateX(0)';
-      reelViewport.scrollLeft = 0;
-      reelViewport.classList.add('spinning');
-      reelShell.classList.add('is-spinning');
-      result.hidden = true;
-      copyStatus.textContent = '';
-      spinButton.disabled = true;
-      spinButton.textContent = 'Крутим…';
-
-      const winnerCard = reelTrack.children[landingIndex];
-      const targetOffset = winnerCard.offsetLeft + winnerCard.offsetWidth / 2 - reelViewport.clientWidth / 2;
-
-      if (reducedMotion) {
-        reelTrack.style.transform = `translateX(-${targetOffset}px)`;
-        finishSpin();
+      if (!offers.length) {
+        loadOffers();
         return;
       }
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          reelTrack.style.transition = '';
-          reelTrack.style.transform = `translateX(-${targetOffset}px)`;
-        });
-      });
-
-      reelTrack.addEventListener('transitionend', function onSpinEnd(event) {
-        if (event.propertyName !== 'transform') return;
-        reelTrack.removeEventListener('transitionend', onSpinEnd);
-        finishSpin();
-      });
+      startSpin();
     });
 
     copyButton.addEventListener('click', async () => {
@@ -610,9 +549,11 @@
         field.select();
         const copied = document.execCommand('copy');
         field.remove();
-        copyStatus.textContent = copied ? 'Промокод скопирован.' : `Скопируй код вручную: ${selectedOffer.code}`;
+        copyStatus.textContent = copied ? 'Промокод скопирован.' : 'Код: ' + selectedOffer.code;
       }
     });
+
+    loadOffers();
   </script>
 </body>
 </html>
