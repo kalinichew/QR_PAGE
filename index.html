@@ -221,10 +221,23 @@
       line-height: 1.1;
     }
 
+    .winner-card__title {
+      margin: 13px 0 0;
+      color: #f0ecff;
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
     .winner-card__description {
-      margin: 14px 0 22px;
+      margin: 8px 0 22px;
       color: #d0cfda;
       line-height: 1.55;
+    }
+
+    #spin-again-btn {
+      width: 100%;
+      margin-top: 16px;
     }
 
     .winner-card__code-row {
@@ -313,12 +326,14 @@
       <article class="winner-card" id="winner-card" aria-live="polite" hidden>
         <p class="winner-card__label">Тебе выпало</p>
         <h1 id="winner-name"></h1>
+        <p class="winner-card__title" id="winner-title"></p>
         <p class="winner-card__description" id="winner-description"></p>
         <div class="winner-card__code-row">
           <code class="winner-card__code" id="winner-code"></code>
           <button class="winner-card__action" id="copy-btn" type="button">Скопировать</button>
           <a class="winner-card__action" id="source-link" target="_blank" rel="noopener noreferrer" hidden>Открыть Pepper</a>
         </div>
+        <button class="winner-card__action" id="spin-again-btn" type="button">Крутить ещё</button>
         <p id="copy-status" role="status"></p>
       </article>
     </section>
@@ -334,7 +349,9 @@
     const reelTrack = document.getElementById('reel-track');
     const winnerCard = document.getElementById('winner-card');
     const winnerName = document.getElementById('winner-name');
+    const winnerTitle = document.getElementById('winner-title');
     const winnerDescription = document.getElementById('winner-description');
+    const spinAgainButton = document.getElementById('spin-again-btn');
     const winnerCode = document.getElementById('winner-code');
     const copyButton = document.getElementById('copy-btn');
     const sourceLink = document.getElementById('source-link');
@@ -358,16 +375,18 @@
       if (!offer || offer.active === false || offer.isExpired === true) return null;
       if (offer.expiresAt && Date.parse(offer.expiresAt) <= Date.now()) return null;
 
-      const name = String(offer.merchant || offer.name || '').trim();
+      const name = String(offer.merchant || offer.name || offer.store || '').trim();
+      const title = String(offer.title || offer.description || '').trim();
       const description = String(offer.description || offer.title || '').trim();
       const code = String(offer.code || offer.voucherCode || '').trim();
-      if (!name || !description || !code) return null;
+      if (!name || !title || !description || !code) return null;
 
       return {
         name: name,
+        title: title,
         description: description,
         code: code,
-        sourceUrl: isSafePepperUrl(offer.sourceUrl || offer.url),
+        sourceUrl: isSafePepperUrl(offer.sourceUrl || offer.source_url || offer.url),
         color: typeof offer.color === 'string' ? offer.color : '#8a72e8'
       };
     }
@@ -407,7 +426,7 @@
 
       const description = document.createElement('p');
       description.className = 'reel-card__description';
-      description.textContent = offer.description;
+      description.textContent = offer.title || offer.description;
 
       const code = document.createElement('span');
       code.className = 'reel-card__code';
@@ -420,6 +439,7 @@
     function showWinner(offer) {
       selectedOffer = offer;
       winnerName.textContent = offer.name;
+      winnerTitle.textContent = offer.title;
       winnerDescription.textContent = offer.description;
       winnerCode.textContent = offer.code;
       copyStatus.textContent = '';
@@ -532,6 +552,8 @@
       }
       startSpin();
     });
+
+    spinAgainButton.addEventListener('click', startSpin);
 
     copyButton.addEventListener('click', async () => {
       if (!selectedOffer) return;
